@@ -7,7 +7,7 @@ import logo from '../../assets/logo.svg';
 
 export default function AddBook() {
     return (
-        <div className="add-book">
+        <div className="add-book-container">
             <div className="content">
                 <section className="form">
                     <img src={logo} alt="Celso" />
