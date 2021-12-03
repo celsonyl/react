@@ -3,8 +3,9 @@ import { useHistory } from "react-router";
 import logo from '../../assets/logo.svg';
 import padlock from '../../assets/padlock.png';
 
-import './styles.css';
 import api from "../../services/api";
+import './styles.css';
+
 
 export default function Login() {
     const [username, setUsername] = useState('');
