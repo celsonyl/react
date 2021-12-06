@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from "react";
-import './styles.css';
+import React, { useEffect, useState } from "react";
+import { FiEdit, FiPower, FiTrash2 } from 'react-icons/fi';
 import { Link } from "react-router-dom";
-import { FiPower, FiEdit, FiTrash2 } from 'react-icons/fi';
+import logo from "../../assets/logo.svg";
+import api from '../../services/api';
+import './styles.css';
 
-import logo from "../../assets/logo.svg"
-import api from '../../services/api'
 
 export default function Books() {
 
     const [books, setBooks] = useState([]);
     const username = localStorage.getItem('username');
-
+    
     useEffect(() => {
-        api.get('book')
+        api.get('book', {
+            params: {
+                page: 1,
+                limit: 4,
+                direction: 'asc'
+            }
+        })
             .then(response => {
                 setBooks(response.data.content)
             })

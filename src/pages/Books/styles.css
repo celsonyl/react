@@ -82,12 +82,12 @@
 
 .book-container ul li strong{
     display: block;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     color: #41414D;
 }
 
 .book-container ul li p + strong{
-    margin-top: 30px;
+    margin-top: 24px;
 }
 
 .book-container ul li p{
