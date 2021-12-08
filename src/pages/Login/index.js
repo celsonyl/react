@@ -19,7 +19,6 @@ export default function Login() {
         const data = {
             username,
             password,
-
         };
 
         try {

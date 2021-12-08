@@ -4,12 +4,27 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import api from '../../services/api';
 import './styles.css';
-
+import { useHistory } from "react-router";
 
 export default function Books() {
 
     const [books, setBooks] = useState([]);
     const username = localStorage.getItem('username');
+    const history = useHistory();
+
+    async function logout(){
+        localStorage.clear();
+        history.push('/');  
+    }
+
+    async function deleteBook(id){
+        try{
+            await api.delete(`book/${id}`)
+            setBooks(books.filter(book => book.id !== id))
+        }catch(err){
+            alert('Delete failed!')
+        }
+    }
     
     useEffect(() => {
         api.get('book', {
@@ -18,8 +33,7 @@ export default function Books() {
                 limit: 4,
                 direction: 'asc'
             }
-        })
-            .then(response => {
+        }).then(response => {
                 setBooks(response.data.content)
             })
     }, [])
@@ -30,7 +44,7 @@ export default function Books() {
                 <img src={logo} alt="Celso" />
                 <span>Welcome, <strong>{username.toUpperCase()}</strong>!</span>
                 <Link className="button" to="/books/new">Add new Book</Link>
-                <button type="button">
+                <button onClick={logout} type="button">
                     <FiPower size={18} color="#251FC5" />
                 </button>
             </header>
@@ -52,7 +66,7 @@ export default function Books() {
                             <FiEdit size={20} color="#251FC5" />
                         </button>
 
-                        <button type="button">
+                        <button onClick={() => deleteBook(book.id)} type="button">
                             <FiTrash2 size={20} color="#251FC5" />
                         </button>
                     </li>

@@ -37,7 +37,6 @@ export default function AddBook() {
             await api.post('book', data, header);
             alert('Book created!')
             history.push('/books');
-
         } catch (err) {
             alert('Error to create book!');
         }
