@@ -37,7 +37,6 @@ export default function Books() {
     useEffect(() => {
         api.get('book', {
             params: {
-                page: 1,
                 limit: 4,
                 direction: 'asc'
             }

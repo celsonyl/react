@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { useHistory } from "react-router";
 import { Link, useParams } from "react-router-dom";
@@ -9,15 +9,37 @@ import './styles.css';
 
 export default function AddBook() {
 
+    const [id, setId] = useState(null);
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [launch_date, setLaunch_date] = useState('');
     const [price, setPrice] = useState('');
 
-    const {bookId} = useParams();
-    
+    const { bookId } = useParams();
+
     const token = localStorage.getItem('acessToken');
     const history = useHistory();
+
+    async function loadBook() {
+        try {
+            const response = await api.get(`book/${bookId}`);
+
+            setId(response.data.id);
+            setTitle(response.data.title);
+            setAuthor(response.data.author);
+            setLaunch_date(response.data.launch_date.split('/').reverse().join('-'));
+            setPrice(response.data.price);
+        } catch (err) {
+            alert('Error recovering book!');
+            history.push('/books');
+        }
+    }
+
+    useEffect(() => {
+        if (bookId === '0') return;
+        else loadBook();
+
+    }, [bookId])
 
     async function createBook(e) {
         e.preventDefault();
