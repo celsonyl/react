@@ -12,20 +12,28 @@ export default function Books() {
     const username = localStorage.getItem('username');
     const history = useHistory();
 
-    async function logout(){
+    async function logout() {
         localStorage.clear();
-        history.push('/');  
+        history.push('/');
     }
 
-    async function deleteBook(id){
-        try{
+    async function deleteBook(id) {
+        try {
             await api.delete(`book/${id}`)
             setBooks(books.filter(book => book.id !== id))
-        }catch(err){
+        } catch (err) {
             alert('Delete failed!')
         }
     }
-    
+
+    async function editBook(id) {
+        try {
+            history.push(`books/new/${id}`)
+        } catch (err) {
+            alert('Edit book failed!')
+        }
+    }
+
     useEffect(() => {
         api.get('book', {
             params: {
@@ -34,8 +42,8 @@ export default function Books() {
                 direction: 'asc'
             }
         }).then(response => {
-                setBooks(response.data.content)
-            })
+            setBooks(response.data.content)
+        })
     }, [])
 
     return (
@@ -43,7 +51,7 @@ export default function Books() {
             <header>
                 <img src={logo} alt="Celso" />
                 <span>Welcome, <strong>{username.toUpperCase()}</strong>!</span>
-                <Link className="button" to="/books/new">Add new Book</Link>
+                <Link className="button" to="/books/new/0">Add new Book</Link>
                 <button onClick={logout} type="button">
                     <FiPower size={18} color="#251FC5" />
                 </button>
@@ -62,7 +70,7 @@ export default function Books() {
                         <strong>Realease Date:</strong>
                         <p>{book.launch_date}</p>
 
-                        <button type="button">
+                        <button onClick={() => editBook(book.id)} type="button">
                             <FiEdit size={20} color="#251FC5" />
                         </button>
 

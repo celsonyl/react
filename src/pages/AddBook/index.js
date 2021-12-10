@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import logo from '../../assets/logo.svg';
 import api from "../../services/createBook";
 import './styles.css';
@@ -14,6 +14,8 @@ export default function AddBook() {
     const [launch_date, setLaunch_date] = useState('');
     const [price, setPrice] = useState('');
 
+    const {bookId} = useParams();
+    
     const token = localStorage.getItem('acessToken');
     const history = useHistory();
 
@@ -49,7 +51,7 @@ export default function AddBook() {
                 <section className="form">
                     <img src={logo} alt="Celso" />
                     <h1>Add new Book</h1>
-                    <p>Enter the book information and clin on 'Add' !</p>
+                    <p>Enter the book information and clin on 'Add' ! #{bookId}</p>
                     <Link className="back-link" to="/books">
                         <FiArrowLeft size={16} color="#251FC5" />
                         Home

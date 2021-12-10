@@ -11,7 +11,7 @@ export default function Rota() {
             <Switch>
                 <Route path="/" exact component={Login} />
                 <Route path="/books" exact component={Books} />
-                <Route path="/books/new" exact component={AddBook} />
+                <Route path="/books/new/:bookId" exact component={AddBook} />
             </Switch>
         </BrowserRouter>
     );
