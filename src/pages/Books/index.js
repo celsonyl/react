@@ -9,8 +9,10 @@ import { useHistory } from "react-router";
 export default function Books() {
 
     const [books, setBooks] = useState([]);
+    const [page, setPage] = useState(0);
     const username = localStorage.getItem('username');
     const history = useHistory();
+    let disable = false;
 
     async function logout() {
         localStorage.clear();
@@ -34,15 +36,22 @@ export default function Books() {
         }
     }
 
-    useEffect(() => {
+    function fetchMoreBook() {
         api.get('book', {
             params: {
+                page: page,
                 limit: 4,
                 direction: 'asc'
             }
         }).then(response => {
-            setBooks(response.data.content)
-        })
+            setBooks(response.data.content);
+        });
+        setPage(page + 1);
+    }
+
+
+    useEffect(() => {
+        fetchMoreBook();
     }, [])
 
     return (
@@ -79,6 +88,7 @@ export default function Books() {
                     </li>
                 ))}
             </ul>
+            <button id="btn" className="button" onClick={fetchMoreBook} type="button">Load more</button>
         </div>
     )
 }

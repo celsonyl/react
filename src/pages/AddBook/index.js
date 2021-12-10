@@ -9,7 +9,7 @@ import './styles.css';
 
 export default function AddBook() {
 
-    const [id, setId] = useState(null);
+    const [, setId] = useState(null);
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [launch_date, setLaunch_date] = useState('');
@@ -37,6 +37,7 @@ export default function AddBook() {
         if (bookId === '0') return;
         else loadBook();
 
+        // eslint-disable-next-line
     }, [bookId])
 
     async function saveOrUpdateBook(e) {
@@ -63,7 +64,6 @@ export default function AddBook() {
         } catch (err) {
             alert('Error to create book!');
         }
-
     };
 
     return (
